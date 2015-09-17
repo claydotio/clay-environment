@@ -1,4 +1,11 @@
 _ = require 'lodash'
+Promise = if window?
+  window.Promise
+else
+  # TODO: remove once v8 is updated
+  # Avoid webpack include
+  bluebird = 'bluebird'
+  require bluebird
 
 if window?
   PortalService = require './services/portal'
@@ -24,20 +31,20 @@ class Environment
     | Dolphin
     | Skyfire
     | Zune
-    ///.test navigator.userAgent
+    ///.test navigator?.userAgent
 
   isAndroid: ->
-    _.contains navigator.appVersion, 'Android'
+    _.contains navigator?.appVersion, 'Android'
 
   isiOS: ->
-    Boolean navigator.appVersion.match /iP(hone|od|ad)/g
+    Boolean navigator?.appVersion.match /iP(hone|od|ad)/g
 
   isGameApp: (gameKey) ->
     Boolean gameKey and
-      _.contains navigator.userAgent, gameKey
+      _.contains navigator?.userAgent, gameKey
 
   isClayApp: ->
-    _.contains navigator.userAgent, 'Clay'
+    _.contains navigator?.userAgent, 'Clay'
 
   isKikEnabled: ->
     if PortalService?

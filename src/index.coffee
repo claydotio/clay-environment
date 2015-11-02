@@ -41,10 +41,10 @@ class Environment
 
   isGameApp: (gameKey) ->
     Boolean gameKey and
-      _.contains navigator?.userAgent, gameKey
+      _.contains navigator?.userAgent?.toLowerCase(), "#{gameKey}/"
 
   isClayApp: ->
-    _.contains navigator?.userAgent, 'Clay'
+    _.contains navigator?.userAgent?.toLowerCase(), 'clay/'
 
   isKikEnabled: ->
     if PortalService?

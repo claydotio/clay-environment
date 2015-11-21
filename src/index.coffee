@@ -43,6 +43,11 @@ class Environment
     Boolean gameKey and
       _.contains navigator?.userAgent?.toLowerCase(), "#{gameKey}/"
 
+  getAppVersion: (gameKey) ->
+    regex = new RegExp("#{gameKey}\/([0-9\.]+)")
+    matches = navigator.userAgent.match(regex)
+    matches?[1]
+
   isClayApp: ->
     _.contains navigator?.userAgent?.toLowerCase(), 'clay/'
 

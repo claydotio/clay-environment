@@ -33,6 +33,9 @@ class Environment
     | Zune
     ///.test navigator?.userAgent
 
+  isFacebook: =>
+    window?.name.indexOf('canvas_fb') isnt -1
+
   isAndroid: ->
     _.contains navigator?.appVersion, 'Android'
 
@@ -59,7 +62,8 @@ class Environment
 
   getPlatform: ({gameKey} = {}) =>
     @isKikEnabled().then (isKik) =>
-      if isKik then 'kik'
+      if @isFacebook() then 'facebook'
+      else if isKik then 'kik'
       else if @isGameApp(gameKey) then 'game_app'
       else if @isClayApp() then 'clay_app'
       else 'web'

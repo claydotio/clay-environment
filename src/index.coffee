@@ -44,7 +44,11 @@ class Environment
 
   isGameApp: (gameKey) ->
     Boolean gameKey and
-      _.contains navigator?.userAgent?.toLowerCase(), "#{gameKey}/"
+      _.contains navigator?.userAgent?.toLowerCase(), " #{gameKey}/"
+
+  isGameChromeApp: (gameKey) ->
+    Boolean gameKey and
+      _.contains navigator?.userAgent?.toLowerCase(), "chrome/#{gameKey}/"
 
   getAppVersion: (gameKey) ->
     regex = new RegExp("#{gameKey}\/([0-9\.]+)")
@@ -64,6 +68,7 @@ class Environment
     @isKikEnabled().then (isKik) =>
       if @isFacebook() then 'facebook'
       else if isKik then 'kik'
+      else if @isGameChromeApp(gameKey) then 'game_chrome_app'
       else if @isGameApp(gameKey) then 'game_app'
       else if @isClayApp() then 'clay_app'
       else 'web'

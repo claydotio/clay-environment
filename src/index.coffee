@@ -33,8 +33,8 @@ class Environment
     | Zune
     ///.test navigator?.userAgent
 
-  isFacebook: =>
-    window?.name.indexOf('canvas_fb') isnt -1
+  isFacebook: ->
+    window and window.name.indexOf('canvas_fb') isnt -1
 
   isAndroid: ->
     _.contains navigator?.appVersion, 'Android'

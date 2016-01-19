@@ -34,7 +34,7 @@ class Environment
     ///.test navigator?.userAgent
 
   isFacebook: ->
-    window and window.name.indexOf('canvas_fb') isnt -1
+    window? and window.name.indexOf('canvas_fb') isnt -1
 
   isAndroid: ->
     _.contains navigator?.appVersion, 'Android'

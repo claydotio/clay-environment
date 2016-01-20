@@ -84,33 +84,20 @@ describe 'Environment', ->
 
   describe 'isKikEnabled', ->
     it 'true', ->
-      overrides =
-        PortalService:
-          registerMethods: -> null
-          call: (method) ->
-            method.should.be 'kik.isEnabled'
-            Promise.resolve true
+      overrides = {window: kik: {enabled: true}}
 
       Environment.__with__(overrides) ->
-        Environment.isKikEnabled().then (isKikEnabled) ->
-          isKikEnabled.should.be true
+        Environment.isKikEnabled().should.be true
 
     it 'false', ->
-      overrides =
-        PortalService:
-          registerMethods: -> null
-          call: (method) ->
-            method.should.be 'kik.isEnabled'
-            Promise.resolve false
+      overrides = {window: kik: {enabled: false}}
 
       Environment.__with__(overrides) ->
-        Environment.isKikEnabled().then (isKikEnabled) ->
-          isKikEnabled.should.be false
+        Environment.isKikEnabled().should.be false
 
   describe 'getPlatform', ->
     it 'kik', ->
       Environment.isKikEnabledCopy = Environment.isKikEnabled
-      Environment.isKikEnabled = -> Promise.resolve true
-      Environment.getPlatform().then (platform) ->
-        Environment.isKikEnabled = Environment.isKikEnabledCopy
-        platform.should.be 'kik'
+      Environment.isKikEnabled = -> true
+      Environment.getPlatform().should.be 'kik'
+      Environment.isKikEnabled = Environment.isKikEnabledCopy

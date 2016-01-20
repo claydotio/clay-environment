@@ -7,10 +7,6 @@ else
   bluebird = 'bluebird'
   require bluebird
 
-if window?
-  PortalService = require './services/portal'
-  PortalService.registerMethods()
-
 class Environment
   isMobile: ->
     ///
@@ -59,18 +55,14 @@ class Environment
     _.contains navigator?.userAgent?.toLowerCase(), 'clay/'
 
   isKikEnabled: ->
-    if PortalService?
-      PortalService.call 'kik.isEnabled'
-    else
-      Promise.resolve false
+    Boolean window?.kik?.enabled
 
   getPlatform: ({gameKey} = {}) =>
-    @isKikEnabled().then (isKik) =>
-      if @isFacebook() then 'facebook'
-      else if isKik then 'kik'
-      else if @isGameChromeApp(gameKey) then 'game_chrome_app'
-      else if @isGameApp(gameKey) then 'game_app'
-      else if @isClayApp() then 'clay_app'
-      else 'web'
+    if @isFacebook() then 'facebook'
+    else if @isKikEnabled then 'kik'
+    else if @isGameChromeApp(gameKey) then 'game_chrome_app'
+    else if @isGameApp(gameKey) then 'game_app'
+    else if @isClayApp() then 'clay_app'
+    else 'web'
 
 module.exports = new Environment()

@@ -1,6 +1,6 @@
 {
   "name": "clay-environment",
-  "version": "0.2.3",
+  "version": "0.3.0",
   "main": "src/index.coffee",
   "scripts": {
     "test": "node_modules/gulp/bin/gulp.js test",
@@ -18,8 +18,7 @@
   "homepage": "https://github.com/claydotio/clay-environment",
   "dependencies": {
     "bluebird": "^2.9.34",
-    "lodash": "^3.10.1",
-    "portal-gun": "^0.2.8"
+    "lodash": "^3.10.1"
   },
   "devDependencies": {
     "clay-chai": "0.0.3",

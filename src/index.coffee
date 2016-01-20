@@ -59,7 +59,7 @@ class Environment
 
   getPlatform: ({gameKey} = {}) =>
     if @isFacebook() then 'facebook'
-    else if @isKikEnabled then 'kik'
+    else if @isKikEnabled() then 'kik'
     else if @isGameChromeApp(gameKey) then 'game_chrome_app'
     else if @isGameApp(gameKey) then 'game_app'
     else if @isClayApp() then 'clay_app'

@@ -38,9 +38,10 @@ class Environment
   isiOS: ->
     Boolean navigator?.appVersion.match /iP(hone|od|ad)/g
 
-  isGameApp: (gameKey) ->
+  isGameApp: (gameKey, {userAgent} = {}) ->
+    userAgent ?= navigator?.userAgent
     Boolean gameKey and
-      _.contains navigator?.userAgent?.toLowerCase(), " #{gameKey}/"
+      _.contains userAgent?.toLowerCase(), " #{gameKey}/"
 
   isGameChromeApp: (gameKey) ->
     Boolean gameKey and

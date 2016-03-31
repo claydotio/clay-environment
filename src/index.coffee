@@ -8,7 +8,8 @@ else
   require bluebird
 
 class Environment
-  isMobile: ->
+  isMobile: ({userAgent} = {}) ->
+    userAgent ?= navigator?.userAgent
     ///
       Mobile
     | iP(hone|od|ad)
@@ -27,43 +28,50 @@ class Environment
     | Dolphin
     | Skyfire
     | Zune
-    ///.test navigator?.userAgent
+    ///.test userAgent
 
   isFacebook: ->
     window? and window.name.indexOf('canvas_fb') isnt -1
 
-  isAndroid: ->
-    _.contains navigator?.appVersion, 'Android'
+  isAndroid: ({userAgent} = {}) ->
+    userAgent ?= navigator?.userAgent
+    _.contains userAgent, 'Android'
 
-  isiOS: ->
-    Boolean navigator?.appVersion.match /iP(hone|od|ad)/g
+  isiOS: ({userAgent} = {}) ->
+    userAgent ?= navigator?.userAgent
+    Boolean userAgent.match /iP(hone|od|ad)/g
 
   isGameApp: (gameKey, {userAgent} = {}) ->
     userAgent ?= navigator?.userAgent
     Boolean gameKey and
       _.contains userAgent?.toLowerCase(), " #{gameKey}/"
 
-  isGameChromeApp: (gameKey) ->
+  isGameChromeApp: (gameKey, {userAgent}) ->
+    userAgent ?= navigator?.userAgent
     Boolean gameKey and
-      _.contains navigator?.userAgent?.toLowerCase(), "chrome/#{gameKey}/"
+      _.contains userAgent?.toLowerCase(), "chrome/#{gameKey}/"
 
-  getAppVersion: (gameKey) ->
+  getAppVersion: (gameKey, {userAgent} = {}) ->
+    userAgent ?= navigator?.userAgent
     regex = new RegExp("#{gameKey}\/([0-9\.]+)")
-    matches = navigator.userAgent.match(regex)
+    matches = userAgent.match(regex)
     matches?[1]
 
-  isClayApp: ->
-    _.contains navigator?.userAgent?.toLowerCase(), 'clay/'
+  isClayApp: ({userAgent} = {}) ->
+    userAgent ?= navigator?.userAgent
+    _.contains userAgent?.toLowerCase(), 'clay/'
 
   isKikEnabled: ->
     Boolean window?.kik?.enabled
 
-  getPlatform: ({gameKey} = {}) =>
+  getPlatform: ({gameKey, userAgent} = {}) =>
+    userAgent ?= navigator?.userAgent
+
     if @isFacebook() then 'facebook'
     else if @isKikEnabled() then 'kik'
-    else if @isGameChromeApp(gameKey) then 'game_chrome_app'
-    else if @isGameApp(gameKey) then 'game_app'
-    else if @isClayApp() then 'clay_app'
+    else if @isGameChromeApp(gameKey, {userAgent}) then 'game_chrome_app'
+    else if @isGameApp(gameKey, {userAgent}) then 'game_app'
+    else if @isClayApp({userAgent}) then 'clay_app'
     else 'web'
 
 module.exports = new Environment()

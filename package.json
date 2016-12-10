@@ -17,8 +17,7 @@
   },
   "homepage": "https://github.com/claydotio/clay-environment",
   "dependencies": {
-    "bluebird": "^2.9.34",
-    "lodash": "^3.10.1"
+    "bluebird": "^2.9.34"
   },
   "devDependencies": {
     "clay-chai": "0.0.3",

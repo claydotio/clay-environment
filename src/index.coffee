@@ -1,4 +1,4 @@
-_ = require 'lodash'
+_contains = require 'lodash/contains'
 Promise = if window?
   window.Promise
 else
@@ -35,7 +35,7 @@ class Environment
 
   isAndroid: ({userAgent} = {}) ->
     userAgent ?= navigator?.userAgent
-    _.contains userAgent, 'Android'
+    _contains userAgent, 'Android'
 
   isiOS: ({userAgent} = {}) ->
     userAgent ?= navigator?.userAgent
@@ -44,12 +44,12 @@ class Environment
   isGameApp: (gameKey, {userAgent} = {}) ->
     userAgent ?= navigator?.userAgent
     Boolean gameKey and
-      _.contains userAgent?.toLowerCase(), " #{gameKey}/"
+      _contains userAgent?.toLowerCase(), " #{gameKey}/"
 
   isGameChromeApp: (gameKey, {userAgent}) ->
     userAgent ?= navigator?.userAgent
     Boolean gameKey and
-      _.contains userAgent?.toLowerCase(), "chrome/#{gameKey}/"
+      _contains userAgent?.toLowerCase(), "chrome/#{gameKey}/"
 
   getAppVersion: (gameKey, {userAgent} = {}) ->
     userAgent ?= navigator?.userAgent
@@ -59,7 +59,7 @@ class Environment
 
   isClayApp: ({userAgent} = {}) ->
     userAgent ?= navigator?.userAgent
-    _.contains userAgent?.toLowerCase(), 'clay/'
+    _contains userAgent?.toLowerCase(), 'clay/'
 
   isKikEnabled: ->
     Boolean window?.kik?.enabled

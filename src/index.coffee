@@ -1,11 +1,4 @@
 _includes = require 'lodash/includes'
-Promise = if window?
-  window.Promise
-else
-  # TODO: remove once v8 is updated
-  # Avoid webpack include
-  bluebird = 'bluebird'
-  require bluebird
 
 class Environment
   isMobile: ({userAgent} = {}) ->

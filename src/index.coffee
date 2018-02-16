@@ -46,7 +46,7 @@ class Environment
 
   getAppVersion: (gameKey, {userAgent} = {}) ->
     userAgent ?= navigator?.userAgent
-    regex = new RegExp("#{gameKey}\/([0-9\.]+)")
+    regex = new RegExp("#{gameKey}\/(?:[a-zA-Z0-9]+/)?([0-9\.]+)")
     matches = userAgent.match(regex)
     matches?[1]
 
